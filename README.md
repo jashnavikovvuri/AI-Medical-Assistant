@@ -48,7 +48,7 @@ The model can classify MRI images into:
 
 ### 🔐 Login Page
 
-![Login Page](screenshots/login.png)
+![Login Page](screenshots/loginpage.png)
 
 ### 📊 Dashboard
 
