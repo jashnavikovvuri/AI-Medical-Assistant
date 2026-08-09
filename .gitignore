@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.venv/
+
+# Dataset
+dataset/
+
+# Generated reports
+reports/
+
+# Uploaded MRI images
+static/uploads/
+
+# Generated charts
+static/charts/
+
+# Local database
+database.db

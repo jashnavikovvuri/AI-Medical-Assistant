@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Medical Assistant</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+    background:
+    linear-gradient(
+        rgba(255,255,255,.65),
+        rgba(255,255,255,.65)
+    ),
+    url("{{ url_for('static', filename='images/hospital_bg.jpg') }}");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+}
+.sidebar{
+
+position:fixed;
+left:0;
+top:0;
+width:260px;
+height:100%;
+background:#0d6efd;
+color:white;
+overflow-y:auto;
+box-shadow:0 0 20px rgba(0,0,0,.2);
+
+}
+.sidebar img{
+
+width:90px;
+display:block;
+margin:20px auto 10px;
+
+}
+
+.sidebar h3{
+
+text-align:center;
+font-weight:bold;
+
+}
+
+.sidebar p{
+
+text-align:center;
+font-size:14px;
+margin-bottom:15px;
+
+}
+
+.sidebar hr{
+
+background:white;
+
+}
+
+.sidebar a{
+
+display:block;
+padding:15px 22px;
+color:white;
+text-decoration:none;
+transition:.3s;
+font-size:16px;
+border-left:4px solid transparent;
+
+}
+
+.sidebar a:hover{
+
+background:white;
+color:#0d6efd;
+padding-left:35px;
+border-left:5px solid white;
+
+}
+
+.main{
+
+margin-left:270px;
+padding:30px;
+
+}
+
+.top-card{
+
+background:rgba(255,255,255,.82);
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+
+border-radius:20px;
+
+padding:30px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+.top-card img{
+
+width:230px;
+
+}
+
+
+.card{
+
+background:rgba(255,255,255,.90);
+
+backdrop-filter:blur(8px);
+
+-webkit-backdrop-filter:blur(8px);
+
+border:none;
+
+border-radius:20px;
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.btn{
+
+border-radius:30px;
+font-weight:bold;
+
+}
+
+/* Dark Mode */
+
+.dark-mode{
+
+background:#121212 !important;
+color:white !important;
+
+}
+
+.dark-mode .card,
+.dark-mode .top-card{
+
+background:#1f1f1f;
+color:white;
+
+}
+
+.dark-mode .form-control{
+
+background:#2b2b2b;
+color:white;
+
+}
+
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6,
+.dark-mode p{
+
+color:white !important;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<img src="{{ url_for('static', filename='images/logo.png') }}">
+
+<h3>AI Medical Assistant</h3>
+
+<p>Brain MRI Detection</p>
+
+<hr>
+
+<a href="/dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
+
+<a href="/profile"><i class="bi bi-person-circle"></i> Patient Profile</a>
+
+<a href="/history"><i class="bi bi-clock-history"></i> Prediction History</a>
+
+<a href="/download_report"><i class="bi bi-file-earmark-pdf-fill"></i> Download PDF</a>
+
+<a href="/chatbot"><i class="bi bi-robot"></i> AI Chatbot</a>
+
+<a href="/appointment"><i class="bi bi-calendar-check-fill"></i> Book Appointment</a>
+
+<a href="/doctor"><i class="bi bi-hospital-fill"></i> Doctor Dashboard</a>
+
+<a href="/analytics"><i class="bi bi-bar-chart-fill"></i> Analytics</a>
+
+<a href="/about"><i class="bi bi-info-circle-fill"></i> About</a>
+
+<a href="/logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+
+</div>
+
+<div class="main">
+
+<div class="top-card">
+
+<div>
+
+<h2>Welcome 👋</h2>
+
+<h4 class="text-primary">
+AI Powered Brain MRI Detection
+</h4>
+
+<h6 class="text-secondary">
+AI Powered Brain Tumor Detection System
+</h6>
+
+<div class="mt-3">
+
+<h6 class="text-primary">
+📅 Date :
+<span id="currentDate"></span>
+</h6>
+
+<h6 class="text-success">
+🕒 Time :
+<span id="currentTime"></span>
+</h6>
+
+</div>
+
+<p>
+Upload an MRI scan to detect brain tumors using Artificial Intelligence.
+</p>
+
+</div>
+
+<div class="text-center">
+
+<button
+id="darkModeBtn"
+class="btn btn-dark mb-3">
+
+🌙 Dark Mode
+
+</button>
+
+<br>
+
+<img src="{{ url_for('static', filename='images/doctor.png') }}">
+
+</div>
+
+</div>
+
+<br>
+<div class="row mt-4">
+
+    <div class="col-md-4">
+        <div class="card shadow-lg p-4 text-center">
+            <i class="bi bi-people-fill text-primary" style="font-size:45px;"></i>
+            <h2 class="mt-3">{{ total_users }}</h2>
+            <h5>Total Users</h5>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-lg p-4 text-center">
+            <i class="bi bi-file-earmark-medical-fill text-success" style="font-size:45px;"></i>
+            <h2 class="mt-3">{{ total_predictions }}</h2>
+            <h5>Total Predictions</h5>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-lg p-4 text-center">
+            <i class="bi bi-heart-pulse-fill text-danger" style="font-size:45px;"></i>
+            <h2 class="mt-3">{{ total_diseases }}</h2>
+            <h5>Disease Types</h5>
+        </div>
+    </div>
+
+</div>
+
+<br>
+
+<form action="/predict" method="POST" enctype="multipart/form-data">
+
+<div class="card shadow-lg p-4 mb-4">
+    <div class="row g-4">
+
+    <!-- LEFT SIDE : Upload + Patient Details -->
+     <div class="col-md-5">
+
+    <div class="card shadow-lg p-4">
+
+        <h3 class="text-primary mb-3">
+            🧠 Upload MRI Scan
+        </h3>
+
+        <hr>
+
+        <h4 class="text-primary mb-4">
+            👤 Patient Details
+        </h4>
+
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+
+            <div class="row">
+
+                <!-- Patient Name -->
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Patient Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="patient_name"
+                        class="form-control"
+                        placeholder="Enter patient name"
+                        value="{{ patient_name or '' }}"
+                        required>
+
+                </div>
+
+
+                <!-- Age -->
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        name="patient_age"
+                        class="form-control"
+                        placeholder="Age"
+                        value="{{ patient_age or '' }}"
+                        min="1"
+                        max="120"
+                        required>
+
+                </div>
+
+
+                <!-- Gender -->
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Gender
+                    </label>
+
+                    <select
+                        name="patient_gender"
+                        class="form-select"
+                        required>
+
+                        <option value="">Select</option>
+
+                        <option
+                            value="Male"
+                            {% if patient_gender == "Male" %}selected{% endif %}>
+                            Male
+                        </option>
+
+                        <option
+                            value="Female"
+                            {% if patient_gender == "Female" %}selected{% endif %}>
+                            Female
+                        </option>
+
+                        <option
+                            value="Other"
+                            {% if patient_gender == "Other" %}selected{% endif %}>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Patient ID -->
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Patient ID
+                    </label>
+
+                    <input
+                        type="text"
+                        name="patient_id"
+                        class="form-control"
+                        placeholder="Patient ID"
+                        value="{{ patient_id or '' }}"
+                        required>
+
+                </div>
+
+
+                <!-- Contact -->
+                <div class="col-md-12 mb-3">
+
+                    <label class="form-label">
+                        Contact Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        name="patient_contact"
+                        class="form-control"
+                        placeholder="Contact Number"
+                        value="{{ patient_contact or '' }}">
+
+                </div>
+
+            </div>
+
+            <hr>
+
+
+            <!-- MRI Upload -->
+
+            <label class="form-label">
+                Select MRI Image
+            </label>
+
+            <input
+                type="file"
+                name="image"
+                class="form-control"
+                accept=".jpg,.jpeg,.png"
+                required>
+
+
+            <!-- Analyze Button -->
+
+            <button
+                type="submit"
+                class="btn btn-primary btn-lg w-100 mt-3">
+
+                <i class="bi bi-cpu-fill"></i>
+                Analyze MRI Scan
+
+            </button>
+
+
+            <hr>
+
+
+            <!-- Supported Formats -->
+
+            <div class="row text-center">
+
+                <div class="col">
+
+                    <h6 class="text-primary">
+                        Supported Formats
+                    </h6>
+
+                    <p>
+                        ✅ JPG &nbsp;
+                        ✅ PNG &nbsp;
+                        ✅ JPEG
+                    </p>
+
+                </div>
+
+
+                <div class="col">
+
+                    <h6 class="text-primary">
+                        Maximum Size
+                    </h6>
+
+                    <p>
+                        📁 5 MB
+                    </p>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- RIGHT SIDE : PREDICTION RESULT -->
+<!-- ================================================= -->
+
+{% if disease %}
+
+<div class="col-md-7">
+
+    <div class="card shadow-lg p-4">
+
+        <h3 class="text-success mb-4">
+            📊 Prediction Result
+        </h3>
+
+
+        <!-- Patient Information -->
+
+        <div class="alert alert-light border">
+
+            <h5 class="text-primary mb-3">
+                👤 Patient Information
+            </h5>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-2">
+
+                    <strong>Patient Name:</strong>
+
+                    {{ patient_name }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-2">
+
+                    <strong>Patient ID:</strong>
+
+                    {{ patient_id }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-2">
+
+                    <strong>Age:</strong>
+
+                    {{ patient_age }}
+
+                </div>
+
+
+                <div class="col-md-6 mb-2">
+
+                    <strong>Gender:</strong>
+
+                    {{ patient_gender }}
+
+                </div>
+
+
+                <div class="col-md-12 mb-2">
+
+                    <strong>Contact:</strong>
+
+                    {{ patient_contact }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="row g-4">
+
+
+            <!-- MRI IMAGE -->
+
+            <div class="col-md-6 text-center">
+
+                <h5 class="text-primary mb-3">
+                    🧠 MRI Scan
+                </h5>
+
+                <img
+                    src="{{ url_for('static', filename='uploads/' + filename) }}"
+                    class="img-fluid rounded shadow"
+                    style="max-height:420px;">
+
+            </div>
+
+
+            <!-- RESULT DETAILS -->
+
+            <div class="col-md-6">
+
+                <h4>
+
+                    Disease :
+
+                    <span class="text-danger">
+                        {{ disease }}
+                    </span>
+
+                </h4>
+
+
+                <h5 class="mt-3">
+
+                    Confidence :
+
+                    <span class="text-primary">
+                        {{ confidence }}
+                    </span>
+
+                </h5>
+
+
+                <div class="alert alert-info mt-3">
+
+                    🤖 AI Confidence Score :
+
+                    <b>
+                        {{ confidence }}
+                    </b>
+
+                </div>
+
+
+                <hr>
+
+
+                <h5>
+                    Description
+                </h5>
+
+                <p>
+                    {{ description }}
+                </p>
+
+
+                <h5>
+                    Precautions
+                </h5>
+
+                <p>
+                    {{ precautions }}
+                </p>
+
+
+                <h5>
+                    Recommended Doctor
+                </h5>
+
+                <p>
+                    {{ doctor }}
+                </p>
+
+
+                <!-- Download PDF -->
+
+                <a
+                    href="{{ url_for('download_report') }}"
+                    class="btn btn-danger mt-2">
+
+                    <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                    Download PDF Report
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- ================================================= -->
+<!-- FEATURES SECTION -->
+<!-- ================================================= -->
+
+<div class="row mt-4">
+
+
+    <!-- Secure AI Detection -->
+
+    <div class="col-md-4 text-center">
+
+        <i
+            class="bi bi-shield-check text-primary"
+            style="font-size:50px;">
+        </i>
+
+        <h5 class="mt-3">
+            Secure AI Detection
+        </h5>
+
+        <p>
+            Your MRI scans are processed securely with AI.
+        </p>
+
+    </div>
+
+
+    <!-- Fast Prediction -->
+
+    <div class="col-md-4 text-center">
+
+        <i
+            class="bi bi-lightning-charge-fill text-warning"
+            style="font-size:50px;">
+        </i>
+
+        <h5 class="mt-3">
+            Fast Prediction
+        </h5>
+
+        <p>
+            Instant brain tumor detection within seconds.
+        </p>
+
+    </div>
+
+
+    <!-- Doctor Recommendation -->
+
+    <div class="col-md-4 text-center">
+
+        <i
+            class="bi bi-hospital-fill text-danger"
+            style="font-size:50px;">
+        </i>
+
+        <h5 class="mt-3">
+            Doctor Recommendation
+        </h5>
+
+        <p>
+            Get the recommended specialist based on prediction.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- FOOTER -->
+<!-- ================================================= -->
+
+<footer class="text-center mt-5 mb-3">
+
+    <p class="mb-1">
+        © 2026 AI Medical Assistant
+    </p>
+
+    <p class="mb-0">
+        Developed using
+    </p>
+
+    <p>
+        Python • Flask • TensorFlow • Bootstrap • SQLite
+    </p>
+
+</footer>
+    
+
+</div>
+
+<script>
+
+const btn=document.getElementById("darkModeBtn");
+
+btn.onclick=function(){
+
+document.body.classList.toggle("dark-mode");
+
+if(document.body.classList.contains("dark-mode")){
+
+btn.innerHTML="☀ Light Mode";
+
+}else{
+
+btn.innerHTML="🌙 Dark Mode";
+
+}
+
+}
+
+function updateDateTime(){
+
+const now=new Date();
+
+document.getElementById("currentDate").innerHTML=
+now.toLocaleDateString();
+
+document.getElementById("currentTime").innerHTML=
+now.toLocaleTimeString();
+
+}
+
+setInterval(updateDateTime,1000);
+
+updateDateTime();
+
+</script>
+
+</body>
+
+</html>
