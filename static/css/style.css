@@ -1,0 +1,161 @@
+/* =========================================
+   MOBILE RESPONSIVE DESIGN
+   Keeps the desktop layout style
+   while fitting it properly on phones
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    /* Main containers */
+    .container,
+    .container-fluid {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    /* Keep Bootstrap row structure */
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Cards */
+    .card,
+    .dashboard-card {
+        max-width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+    }
+
+    /* Images */
+    img {
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    /* Headings */
+    h1 {
+        font-size: 26px;
+    }
+
+    h2 {
+        font-size: 23px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    h4 {
+        font-size: 18px;
+    }
+
+    h5 {
+        font-size: 16px;
+    }
+
+    h6 {
+        font-size: 14px;
+    }
+
+    /* Text */
+    p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* Navbar */
+    .navbar {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .navbar-brand {
+        font-size: 19px;
+    }
+
+    .navbar-nav {
+        width: 100%;
+    }
+
+    /* Buttons */
+    .btn {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Forms */
+    input,
+    select,
+    textarea {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Main content */
+    .main-content {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Prediction sections */
+    .prediction-card,
+    .upload-card,
+    .result-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Tables */
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    /* Don't force every flex element to wrap */
+    .d-flex {
+        max-width: 100%;
+    }
+
+    /* Dashboard spacing */
+    .dashboard-card {
+        padding: 15px;
+    }
+
+    /* Profile / doctor images */
+    .profile-image,
+    .doctor-image {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Icons */
+    .bi {
+        max-width: 100%;
+    }
+}
