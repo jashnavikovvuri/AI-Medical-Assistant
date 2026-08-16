@@ -1,133 +1,505 @@
-/* =========================================
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+    background:
+        linear-gradient(
+            rgba(255, 255, 255, 0.65),
+            rgba(255, 255, 255, 0.65)
+        ),
+        url("../images/hospital_bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    background: #0d6efd;
+    color: white;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
+    z-index: 1000;
+}
+
+.sidebar img {
+    width: 90px;
+    height: auto;
+
+    display: block;
+
+    margin: 20px auto 10px;
+}
+
+.sidebar h3 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.sidebar p {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.sidebar hr {
+    background: white;
+    margin: 10px 15px;
+}
+
+.sidebar a {
+    display: block;
+
+    padding: 15px 22px;
+
+    color: white;
+    text-decoration: none;
+
+    transition: 0.3s;
+
+    font-size: 16px;
+
+    border-left: 4px solid transparent;
+
+    white-space: nowrap;
+}
+
+.sidebar a:hover {
+    background: white;
+    color: #0d6efd;
+
+    padding-left: 35px;
+
+    border-left: 5px solid #0d6efd;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main {
+    margin-left: 270px;
+    padding: 30px;
+
+    width: calc(100% - 270px);
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   TOP WELCOME CARD
+   ========================================================= */
+
+.top-card {
+    width: 100%;
+
+    background: rgba(255, 255, 255, 0.82);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 30px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+    overflow: hidden;
+}
+
+.top-card > div:first-child {
+    min-width: 0;
+    flex: 1;
+}
+
+.top-card img {
+    width: 230px;
+    max-width: 100%;
+    height: auto;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card {
+    background: rgba(255, 255, 255, 0.90);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    border: none;
+
+    border-radius: 20px;
+
+    transition: 0.3s;
+
+    max-width: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   IMAGES
+   ========================================================= */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+
+input,
+select,
+textarea {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+.dark-mode {
+    background: #121212 !important;
+    color: white !important;
+}
+
+.dark-mode .card,
+.dark-mode .top-card {
+    background: #1f1f1f;
+    color: white;
+}
+
+.dark-mode .form-control,
+.dark-mode .form-select {
+    background: #2b2b2b;
+    color: white;
+}
+
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6,
+.dark-mode p {
+    color: white !important;
+}
+
+
+/* =========================================================
    MOBILE RESPONSIVE DESIGN
-   Keeps the desktop layout style
-   while fitting it properly on phones
-   ========================================= */
+   ========================================================= */
 
 @media (max-width: 768px) {
 
-    /* =========================================
-       BASIC PAGE
-       ========================================= */
+    /* -----------------------------------------------------
+       PAGE
+       ----------------------------------------------------- */
 
     html,
     body {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-    }
-
-    body {
-        font-size: 14px;
-    }
-
-    /* Prevent any element from creating
-       unwanted horizontal scrolling */
-    * {
-        box-sizing: border-box;
-    }
-
-
-    /* =========================================
-       MAIN CONTAINERS
-       ========================================= */
-
-    .container,
-    .container-fluid {
         width: 100% !important;
         max-width: 100% !important;
-        padding-left: 12px;
-        padding-right: 12px;
-    }
 
-    .row {
-        width: 100%;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow-x: hidden !important;
     }
 
 
-    /* =========================================
-       MAIN CONTENT
-       ========================================= */
-
-    .main-content {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-left: 0 !important;
-        padding: 12px !important;
-        box-sizing: border-box;
-    }
-
-
-    /* =========================================
+    /* -----------------------------------------------------
        SIDEBAR
-       ========================================= */
+       ----------------------------------------------------- */
 
     .sidebar {
-        width: 280px !important;
-        max-width: 280px !important;
-        position: fixed !important;
+        width: 260px !important;
+        max-width: 260px !important;
+
+        left: -260px !important;
+
         top: 0;
-        left: -280px !important;
+
         height: 100vh;
+
         z-index: 9999;
+
+        transition: left 0.3s ease;
+
         overflow-y: auto;
         overflow-x: hidden;
-        transition: left 0.3s ease;
-        box-sizing: border-box;
     }
 
-    /* Sidebar open state */
+
+    /* If sidebar is opened */
     .sidebar.active {
         left: 0 !important;
     }
 
 
-    /* =========================================
-       CARDS
-       ========================================= */
+    /* -----------------------------------------------------
+       MAIN CONTENT — MOST IMPORTANT FIX
+       ----------------------------------------------------- */
 
-    .card,
-    .dashboard-card,
-    .prediction-card,
-    .upload-card,
-    .result-card {
+    .main {
+        margin-left: 0 !important;
+
         width: 100% !important;
         max-width: 100% !important;
+
+        padding: 15px !important;
+
+        min-height: 100vh;
+
+        overflow-x: hidden !important;
+    }
+
+
+    /* -----------------------------------------------------
+       TOP CARD
+       ----------------------------------------------------- */
+
+    .top-card {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        padding: 20px !important;
+
+        display: flex !important;
+
+        flex-direction: column !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        text-align: center;
+
+        gap: 20px;
+
+        overflow: hidden;
+    }
+
+
+    .top-card > div:first-child {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+    }
+
+
+    .top-card h2 {
+        font-size: 25px !important;
+
+        word-break: normal;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    .top-card h4 {
+        font-size: 20px !important;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    .top-card h6 {
+        font-size: 14px !important;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    .top-card p {
+        font-size: 14px !important;
+
+        line-height: 1.5;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    .top-card > div:last-child {
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        text-align: center !important;
+    }
+
+
+    .top-card img {
+        width: 180px !important;
+
+        max-width: 80% !important;
+
+        height: auto !important;
+    }
+
+
+    /* -----------------------------------------------------
+       BOOTSTRAP ROW
+       ----------------------------------------------------- */
+
+    .row {
+        width: 100% !important;
+
+        max-width: 100% !important;
+
         margin-left: 0 !important;
         margin-right: 0 !important;
+    }
+
+
+    /* -----------------------------------------------------
+       BOOTSTRAP COLUMNS
+       ----------------------------------------------------- */
+
+    .row > [class*="col-"] {
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        flex: 0 0 100% !important;
+
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+
         margin-bottom: 15px;
-        box-sizing: border-box;
-    }
-
-    .dashboard-card {
-        padding: 15px;
     }
 
 
-    /* =========================================
-       IMAGES
-       ========================================= */
+    /* -----------------------------------------------------
+       CARDS
+       ----------------------------------------------------- */
 
-    img {
+    .card {
+        width: 100% !important;
+
         max-width: 100% !important;
-        height: auto !important;
-        object-fit: contain;
+
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+
+        padding: 18px !important;
+
+        overflow: hidden;
     }
 
-    .profile-image,
-    .doctor-image {
+
+    /* -----------------------------------------------------
+       FORM
+       ----------------------------------------------------- */
+
+    form {
+        width: 100% !important;
+
         max-width: 100% !important;
+    }
+
+
+    input,
+    select,
+    textarea {
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        box-sizing: border-box !important;
+    }
+
+
+    /* -----------------------------------------------------
+       MRI IMAGE
+       ----------------------------------------------------- */
+
+    .img-fluid {
+        max-width: 100% !important;
+
         height: auto !important;
     }
 
 
-    /* =========================================
+    /* -----------------------------------------------------
        HEADINGS
-       ========================================= */
+       ----------------------------------------------------- */
 
     h1 {
         font-size: 26px;
@@ -154,110 +526,117 @@
     }
 
 
-    /* =========================================
+    /* -----------------------------------------------------
        TEXT
-       ========================================= */
+       ----------------------------------------------------- */
 
     p {
         font-size: 14px;
+
         line-height: 1.5;
+
+        overflow-wrap: anywhere;
     }
 
 
-    /* =========================================
-       NAVBAR
-       ========================================= */
-
-    .navbar {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    .navbar-brand {
-        font-size: 19px;
-    }
-
-    .navbar-nav {
-        width: 100%;
-    }
-
-
-    /* =========================================
+    /* -----------------------------------------------------
        BUTTONS
-       ========================================= */
+       ----------------------------------------------------- */
 
     .btn {
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-
-    /* =========================================
-       FORMS
-       ========================================= */
-
-    input,
-    select,
-    textarea {
-        width: 100% !important;
         max-width: 100% !important;
-        box-sizing: border-box;
+
+        white-space: normal;
     }
 
 
-    /* =========================================
+    /* -----------------------------------------------------
        TABLES
-       ========================================= */
+       ----------------------------------------------------- */
 
     .table-responsive {
-        width: 100%;
-        max-width: 100%;
+        width: 100% !important;
+
+        max-width: 100% !important;
+
         overflow-x: auto;
     }
 
-    table {
-        max-width: 100%;
+
+    /* -----------------------------------------------------
+       FOOTER
+       ----------------------------------------------------- */
+
+    footer {
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        text-align: center;
+
+        overflow-wrap: anywhere;
     }
 
 
-    /* =========================================
-       FLEX ELEMENTS
-       ========================================= */
-
-    .d-flex {
-        max-width: 100%;
-    }
-
-
-    /* =========================================
+    /* -----------------------------------------------------
        ICONS
-       ========================================= */
+       ----------------------------------------------------- */
 
     .bi {
         max-width: 100%;
     }
 
 
-    /* =========================================
-       PREDICTION / MRI SECTION
-       ========================================= */
-
-    .prediction-card,
-    .upload-card,
-    .result-card {
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box;
-    }
-
-
-    /* =========================================
+    /* -----------------------------------------------------
        PREVENT LARGE ELEMENTS
-       ========================================= */
+       ----------------------------------------------------- */
 
     canvas,
     iframe,
     video {
         max-width: 100% !important;
+
+        height: auto;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .main {
+        padding: 10px !important;
+    }
+
+    .top-card {
+        padding: 15px !important;
+
+        border-radius: 15px;
+    }
+
+    .top-card h2 {
+        font-size: 22px !important;
+    }
+
+    .top-card h4 {
+        font-size: 18px !important;
+    }
+
+    .top-card img {
+        width: 150px !important;
+    }
+
+    .card {
+        padding: 15px !important;
+
+        border-radius: 15px;
+    }
+
+    .main .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
     }
 }

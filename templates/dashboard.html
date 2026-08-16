@@ -8,185 +8,368 @@
 
 <title>AI Medical Assistant</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
 
 <link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
 <link rel="stylesheet"
-href="{{ url_for('static', filename='css/style.css') }}">
+      href="{{ url_for('static', filename='css/style.css') }}">
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-body{
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+body {
 
     background:
-    linear-gradient(
-        rgba(255,255,255,.65),
-        rgba(255,255,255,.65)
-    ),
-    url("{{ url_for('static', filename='images/hospital_bg.jpg') }}");
+        linear-gradient(
+            rgba(255,255,255,.65),
+            rgba(255,255,255,.65)
+        ),
+        url("{{ url_for('static', filename='images/hospital_bg.jpg') }}");
 
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
-
-}
-.sidebar{
-
-position:fixed;
-left:0;
-top:0;
-width:260px;
-height:100%;
-background:#0d6efd;
-color:white;
-overflow-y:auto;
-box-shadow:0 0 20px rgba(0,0,0,.2);
-
-}
-.sidebar img{
-
-width:90px;
-display:block;
-margin:20px auto 10px;
-
-}
-
-.sidebar h3{
-
-text-align:center;
-font-weight:bold;
-
-}
-
-.sidebar p{
-
-text-align:center;
-font-size:14px;
-margin-bottom:15px;
-
-}
-
-.sidebar hr{
-
-background:white;
-
-}
-
-.sidebar a{
-
-display:block;
-padding:15px 22px;
-color:white;
-text-decoration:none;
-transition:.3s;
-font-size:16px;
-border-left:4px solid transparent;
-
-}
-
-.sidebar a:hover{
-
-background:white;
-color:#0d6efd;
-padding-left:35px;
-border-left:5px solid white;
-
-}
-
-.main{
-
-margin-left:270px;
-padding:30px;
-
-}
-
-.top-card{
-
-background:rgba(255,255,255,.82);
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
-
-border-radius:20px;
-
-padding:30px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-box-shadow:0 8px 20px rgba(0,0,0,.15);
-
-}
-
-.top-card img{
-
-width:230px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 
 }
 
 
-.card{
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
 
-background:rgba(255,255,255,.90);
+.sidebar {
 
-backdrop-filter:blur(8px);
+    position: fixed;
 
--webkit-backdrop-filter:blur(8px);
+    left: 0;
+    top: 0;
 
-border:none;
+    width: 260px;
+    height: 100vh;
 
-border-radius:20px;
+    background: #0d6efd;
 
-transition:.3s;
+    color: white;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-shadow: 0 0 20px rgba(0,0,0,.2);
+
+    z-index: 9999;
+
+    transition: left .3s ease;
 
 }
 
-.card:hover{
+.sidebar img {
 
-transform:translateY(-5px);
-box-shadow:0 10px 25px rgba(0,0,0,.15);
+    width: 90px;
 
-}
+    display: block;
 
-.btn{
-
-border-radius:30px;
-font-weight:bold;
+    margin: 20px auto 10px;
 
 }
 
-/* Dark Mode */
+.sidebar h3 {
 
-.dark-mode{
+    text-align: center;
 
-background:#121212 !important;
-color:white !important;
+    font-weight: bold;
+
+    font-size: 21px;
+
+}
+
+.sidebar p {
+
+    text-align: center;
+
+    font-size: 14px;
+
+    margin-bottom: 15px;
+
+}
+
+.sidebar hr {
+
+    background: white;
+
+    opacity: .7;
+
+}
+
+.sidebar a {
+
+    display: block;
+
+    padding: 15px 22px;
+
+    color: white;
+
+    text-decoration: none;
+
+    transition: .3s;
+
+    font-size: 16px;
+
+    border-left: 4px solid transparent;
+
+}
+
+.sidebar a:hover {
+
+    background: white;
+
+    color: #0d6efd;
+
+    padding-left: 30px;
+
+    border-left: 5px solid #0d6efd;
+
+}
+
+
+/* =========================================================
+   SIDEBAR CLOSE BUTTON
+   ========================================================= */
+
+.sidebar-close {
+
+    display: none;
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 15px;
+
+    background: white;
+
+    color: #0d6efd;
+
+    border: none;
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 50%;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+   ========================================================= */
+
+.mobile-menu-btn {
+
+    display: none;
+
+    position: fixed;
+
+    top: 15px;
+
+    left: 15px;
+
+    width: 45px;
+
+    height: 45px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #0d6efd;
+
+    color: white;
+
+    font-size: 24px;
+
+    z-index: 10000;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,.25);
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   SIDEBAR OVERLAY
+   ========================================================= */
+
+.sidebar-overlay {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.45);
+
+    z-index: 9998;
+
+}
+
+.sidebar-overlay.active {
+
+    display: block;
+
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.main {
+
+    margin-left: 270px;
+
+    padding: 30px;
+
+    width: calc(100% - 270px);
+
+}
+
+
+/* =========================================================
+   TOP CARD
+   ========================================================= */
+
+.top-card {
+
+    background: rgba(255,255,255,.82);
+
+    backdrop-filter: blur(10px);
+
+    -webkit-backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 30px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+
+}
+
+.top-card img {
+
+    width: 230px;
+
+    max-width: 100%;
+
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card {
+
+    background: rgba(255,255,255,.90);
+
+    backdrop-filter: blur(8px);
+
+    -webkit-backdrop-filter: blur(8px);
+
+    border: none;
+
+    border-radius: 20px;
+
+    transition: .3s;
+
+}
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+
+    border-radius: 30px;
+
+    font-weight: bold;
+
+}
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+.dark-mode {
+
+    background: #121212 !important;
+
+    color: white !important;
 
 }
 
 .dark-mode .card,
-.dark-mode .top-card{
+.dark-mode .top-card {
 
-background:#1f1f1f;
-color:white;
+    background: #1f1f1f;
+
+    color: white;
 
 }
 
-.dark-mode .form-control{
+.dark-mode .form-control,
+.dark-mode .form-select {
 
-background:#2b2b2b;
-color:white;
+    background: #2b2b2b;
+
+    color: white;
+
+    border-color: #555;
 
 }
 
@@ -195,9 +378,294 @@ color:white;
 .dark-mode h4,
 .dark-mode h5,
 .dark-mode h6,
-.dark-mode p{
+.dark-mode p,
+.dark-mode label {
 
-color:white !important;
+    color: white !important;
+
+}
+
+
+/* =========================================================
+   MOBILE RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        overflow-x: hidden;
+
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE SIDEBAR
+       ----------------------------------------------------- */
+
+    .sidebar {
+
+        left: -280px;
+
+        width: 260px;
+
+        height: 100vh;
+
+        transition: left .3s ease;
+
+    }
+
+    .sidebar.active {
+
+        left: 0;
+
+    }
+
+    .sidebar-close {
+
+        display: block;
+
+    }
+
+    .mobile-menu-btn {
+
+        display: block;
+
+    }
+
+
+    /* -----------------------------------------------------
+       MAIN CONTENT
+       ----------------------------------------------------- */
+
+    .main {
+
+        margin-left: 0 !important;
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        padding: 75px 12px 20px 12px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       TOP CARD
+       ----------------------------------------------------- */
+
+    .top-card {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        padding: 22px 15px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 20px;
+
+        overflow: hidden;
+
+    }
+
+    .top-card img {
+
+        width: 180px;
+
+        max-width: 100%;
+
+        margin: auto;
+
+    }
+
+    .top-card h2 {
+
+        font-size: 25px;
+
+    }
+
+    .top-card h4 {
+
+        font-size: 19px;
+
+    }
+
+    .top-card h6 {
+
+        font-size: 14px;
+
+    }
+
+    .top-card p {
+
+        font-size: 14px;
+
+        line-height: 1.5;
+
+    }
+
+
+    /* -----------------------------------------------------
+       BOOTSTRAP ROW
+       ----------------------------------------------------- */
+
+    .row {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        margin-left: 0 !important;
+
+        margin-right: 0 !important;
+
+    }
+
+
+    .row > * {
+
+        max-width: 100%;
+
+    }
+
+
+    /* -----------------------------------------------------
+       CARDS
+       ----------------------------------------------------- */
+
+    .card {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        margin-left: 0 !important;
+
+        margin-right: 0 !important;
+
+        overflow: hidden;
+
+    }
+
+
+    /* -----------------------------------------------------
+       INPUTS
+       ----------------------------------------------------- */
+
+    input,
+    select,
+    textarea {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+    }
+
+
+    /* -----------------------------------------------------
+       IMAGES
+       ----------------------------------------------------- */
+
+    img {
+
+        max-width: 100%;
+
+        height: auto;
+
+    }
+
+
+    /* -----------------------------------------------------
+       PREDICTION IMAGE
+       ----------------------------------------------------- */
+
+    .img-fluid {
+
+        max-width: 100%;
+
+        height: auto;
+
+    }
+
+
+    /* -----------------------------------------------------
+       BUTTONS
+       ----------------------------------------------------- */
+
+    .btn {
+
+        max-width: 100%;
+
+    }
+
+
+    /* -----------------------------------------------------
+       FOOTER
+       ----------------------------------------------------- */
+
+    footer {
+
+        width: 100%;
+
+        overflow-wrap: break-word;
+
+        text-align: center;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .main {
+
+        padding-left: 10px;
+
+        padding-right: 10px;
+
+    }
+
+    .top-card {
+
+        padding: 18px 12px;
+
+    }
+
+    .top-card h2 {
+
+        font-size: 23px;
+
+    }
+
+    .top-card h4 {
+
+        font-size: 17px;
+
+    }
+
+    .top-card img {
+
+        width: 160px;
+
+    }
 
 }
 
@@ -205,647 +673,1011 @@ color:white !important;
 
 </head>
 
+
 <body>
 
-<div class="sidebar">
 
-<img src="{{ url_for('static', filename='images/logo.png') }}">
-
-<h3>AI Medical Assistant</h3>
-
-<p>Brain MRI Detection</p>
-
-<hr>
-
-<a href="/dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
-
-<a href="/profile"><i class="bi bi-person-circle"></i> Patient Profile</a>
-
-<a href="/history"><i class="bi bi-clock-history"></i> Prediction History</a>
-
-<a href="/download_report"><i class="bi bi-file-earmark-pdf-fill"></i> Download PDF</a>
-
-<a href="/chatbot"><i class="bi bi-robot"></i> AI Chatbot</a>
-
-<a href="/appointment"><i class="bi bi-calendar-check-fill"></i> Book Appointment</a>
-
-<a href="/doctor"><i class="bi bi-hospital-fill"></i> Doctor Dashboard</a>
-
-<a href="/analytics"><i class="bi bi-bar-chart-fill"></i> Analytics</a>
-
-<a href="/about"><i class="bi bi-info-circle-fill"></i> About</a>
-
-<a href="/logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
-
-</div>
-
-<div class="main">
-
-<div class="top-card">
-
-<div>
-
-<h2>Welcome 👋</h2>
-
-<h4 class="text-primary">
-AI Powered Brain MRI Detection
-</h4>
-
-<h6 class="text-secondary">
-AI Powered Brain Tumor Detection System
-</h6>
-
-<div class="mt-3">
-
-<h6 class="text-primary">
-📅 Date :
-<span id="currentDate"></span>
-</h6>
-
-<h6 class="text-success">
-🕒 Time :
-<span id="currentTime"></span>
-</h6>
-
-</div>
-
-<p>
-Upload an MRI scan to detect brain tumors using Artificial Intelligence.
-</p>
-
-</div>
-
-<div class="text-center">
+<!-- =========================================================
+     MOBILE MENU BUTTON
+     ========================================================= -->
 
 <button
-id="darkModeBtn"
-class="btn btn-dark mb-3">
+    class="mobile-menu-btn"
+    id="mobileMenuBtn"
+    type="button">
 
-🌙 Dark Mode
+    <i class="bi bi-list"></i>
 
 </button>
 
-<br>
 
-<img src="{{ url_for('static', filename='images/doctor.png') }}">
+<!-- =========================================================
+     SIDEBAR OVERLAY
+     ========================================================= -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay">
+</div>
+
+
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
+
+<div
+    class="sidebar"
+    id="sidebar">
+
+
+    <!-- CLOSE BUTTON -->
+
+    <button
+        class="sidebar-close"
+        id="sidebarClose"
+        type="button">
+
+        <i class="bi bi-x-lg"></i>
+
+    </button>
+
+
+    <img
+        src="{{ url_for('static', filename='images/logo.png') }}"
+        alt="AI Medical Assistant Logo">
+
+
+    <h3>
+        AI Medical Assistant
+    </h3>
+
+
+    <p>
+        Brain MRI Detection
+    </p>
+
+
+    <hr>
+
+
+    <a href="/dashboard">
+        <i class="bi bi-speedometer2"></i>
+        Dashboard
+    </a>
+
+
+    <a href="/profile">
+        <i class="bi bi-person-circle"></i>
+        Patient Profile
+    </a>
+
+
+    <a href="/history">
+        <i class="bi bi-clock-history"></i>
+        Prediction History
+    </a>
+
+
+    <a href="/download_report">
+        <i class="bi bi-file-earmark-pdf-fill"></i>
+        Download PDF
+    </a>
+
+
+    <a href="/chatbot">
+        <i class="bi bi-robot"></i>
+        AI Chatbot
+    </a>
+
+
+    <a href="/appointment">
+        <i class="bi bi-calendar-check-fill"></i>
+        Book Appointment
+    </a>
+
+
+    <a href="/doctor">
+        <i class="bi bi-hospital-fill"></i>
+        Doctor Dashboard
+    </a>
+
+
+    <a href="/analytics">
+        <i class="bi bi-bar-chart-fill"></i>
+        Analytics
+    </a>
+
+
+    <a href="/about">
+        <i class="bi bi-info-circle-fill"></i>
+        About
+    </a>
+
+
+    <a href="/logout">
+        <i class="bi bi-box-arrow-right"></i>
+        Logout
+    </a>
+
 
 </div>
 
-</div>
 
-<br>
-<div class="row mt-4">
+<!-- =========================================================
+     MAIN CONTENT
+     ========================================================= -->
 
-    <div class="col-md-4">
-        <div class="card shadow-lg p-4 text-center">
-            <i class="bi bi-people-fill text-primary" style="font-size:45px;"></i>
-            <h2 class="mt-3">{{ total_users }}</h2>
-            <h5>Total Users</h5>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card shadow-lg p-4 text-center">
-            <i class="bi bi-file-earmark-medical-fill text-success" style="font-size:45px;"></i>
-            <h2 class="mt-3">{{ total_predictions }}</h2>
-            <h5>Total Predictions</h5>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card shadow-lg p-4 text-center">
-            <i class="bi bi-heart-pulse-fill text-danger" style="font-size:45px;"></i>
-            <h2 class="mt-3">{{ total_diseases }}</h2>
-            <h5>Disease Types</h5>
-        </div>
-    </div>
-
-</div>
-
-<br>
-
-<form action="/predict" method="POST" enctype="multipart/form-data">
-
-<div class="card shadow-lg p-4 mb-4">
-    <div class="row g-4">
-
-    <!-- LEFT SIDE : Upload + Patient Details -->
-     <div class="col-md-5">
-
-    <div class="card shadow-lg p-4">
-
-        <h3 class="text-primary mb-3">
-            🧠 Upload MRI Scan
-        </h3>
-
-        <hr>
-
-        <h4 class="text-primary mb-4">
-            👤 Patient Details
-        </h4>
-
-        <form action="/predict" method="POST" enctype="multipart/form-data">
-
-            <div class="row">
-
-                <!-- Patient Name -->
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label">
-                        Patient Name
-                    </label>
-
-                    <input
-                        type="text"
-                        name="patient_name"
-                        class="form-control"
-                        placeholder="Enter patient name"
-                        value="{{ patient_name or '' }}"
-                        required>
-
-                </div>
+<div class="main">
 
 
-                <!-- Age -->
-                <div class="col-md-6 mb-3">
+    <!-- =====================================================
+         TOP CARD
+         ===================================================== -->
 
-                    <label class="form-label">
-                        Age
-                    </label>
-
-                    <input
-                        type="number"
-                        name="patient_age"
-                        class="form-control"
-                        placeholder="Age"
-                        value="{{ patient_age or '' }}"
-                        min="1"
-                        max="120"
-                        required>
-
-                </div>
+    <div class="top-card">
 
 
-                <!-- Gender -->
-                <div class="col-md-6 mb-3">
+        <div>
 
-                    <label class="form-label">
-                        Gender
-                    </label>
-
-                    <select
-                        name="patient_gender"
-                        class="form-select"
-                        required>
-
-                        <option value="">Select</option>
-
-                        <option
-                            value="Male"
-                            {% if patient_gender == "Male" %}selected{% endif %}>
-                            Male
-                        </option>
-
-                        <option
-                            value="Female"
-                            {% if patient_gender == "Female" %}selected{% endif %}>
-                            Female
-                        </option>
-
-                        <option
-                            value="Other"
-                            {% if patient_gender == "Other" %}selected{% endif %}>
-                            Other
-                        </option>
-
-                    </select>
-
-                </div>
+            <h2>
+                Welcome 👋
+            </h2>
 
 
-                <!-- Patient ID -->
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label">
-                        Patient ID
-                    </label>
-
-                    <input
-                        type="text"
-                        name="patient_id"
-                        class="form-control"
-                        placeholder="Patient ID"
-                        value="{{ patient_id or '' }}"
-                        required>
-
-                </div>
+            <h4 class="text-primary">
+                AI Powered Brain MRI Detection
+            </h4>
 
 
-                <!-- Contact -->
-                <div class="col-md-12 mb-3">
+            <h6 class="text-secondary">
+                AI Powered Brain Tumor Detection System
+            </h6>
 
-                    <label class="form-label">
-                        Contact Number
-                    </label>
 
-                    <input
-                        type="tel"
-                        name="patient_contact"
-                        class="form-control"
-                        placeholder="Contact Number"
-                        value="{{ patient_contact or '' }}">
+            <div class="mt-3">
 
-                </div>
+                <h6 class="text-primary">
+
+                    📅 Date :
+
+                    <span id="currentDate"></span>
+
+                </h6>
+
+
+                <h6 class="text-success">
+
+                    🕒 Time :
+
+                    <span id="currentTime"></span>
+
+                </h6>
 
             </div>
 
-            <hr>
+
+            <p class="mt-3">
+
+                Upload an MRI scan to detect brain tumors
+                using Artificial Intelligence.
+
+            </p>
+
+        </div>
 
 
-            <!-- MRI Upload -->
+        <div class="text-center">
 
-            <label class="form-label">
-                Select MRI Image
-            </label>
-
-            <input
-                type="file"
-                name="image"
-                class="form-control"
-                accept=".jpg,.jpeg,.png"
-                required>
-
-
-            <!-- Analyze Button -->
 
             <button
-                type="submit"
-                class="btn btn-primary btn-lg w-100 mt-3">
+                id="darkModeBtn"
+                class="btn btn-dark mb-3"
+                type="button">
 
-                <i class="bi bi-cpu-fill"></i>
-                Analyze MRI Scan
+                🌙 Dark Mode
 
             </button>
 
 
-            <hr>
+            <br>
 
 
-            <!-- Supported Formats -->
+            <img
+                src="{{ url_for('static', filename='images/doctor.png') }}"
+                alt="Doctor">
 
-            <div class="row text-center">
+        </div>
 
-                <div class="col">
-
-                    <h6 class="text-primary">
-                        Supported Formats
-                    </h6>
-
-                    <p>
-                        ✅ JPG &nbsp;
-                        ✅ PNG &nbsp;
-                        ✅ JPEG
-                    </p>
-
-                </div>
-
-
-                <div class="col">
-
-                    <h6 class="text-primary">
-                        Maximum Size
-                    </h6>
-
-                    <p>
-                        📁 5 MB
-                    </p>
-
-                </div>
-
-            </div>
-
-        </form>
 
     </div>
 
-</div>
+
+    <br>
 
 
-<!-- ================================================= -->
-<!-- RIGHT SIDE : PREDICTION RESULT -->
-<!-- ================================================= -->
+    <!-- =====================================================
+         STATISTICS
+         ===================================================== -->
 
-{% if disease %}
-
-<div class="col-md-7">
-
-    <div class="card shadow-lg p-4">
-
-        <h3 class="text-success mb-4">
-            📊 Prediction Result
-        </h3>
+    <div class="row mt-4 g-4">
 
 
-        <!-- Patient Information -->
+        <div class="col-md-4">
 
-        <div class="alert alert-light border">
+            <div class="card shadow-lg p-4 text-center">
 
-            <h5 class="text-primary mb-3">
-                👤 Patient Information
+                <i
+                    class="bi bi-people-fill text-primary"
+                    style="font-size:45px;">
+                </i>
+
+                <h2 class="mt-3">
+                    {{ total_users }}
+                </h2>
+
+                <h5>
+                    Total Users
+                </h5>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card shadow-lg p-4 text-center">
+
+                <i
+                    class="bi bi-file-earmark-medical-fill text-success"
+                    style="font-size:45px;">
+                </i>
+
+                <h2 class="mt-3">
+                    {{ total_predictions }}
+                </h2>
+
+                <h5>
+                    Total Predictions
+                </h5>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card shadow-lg p-4 text-center">
+
+                <i
+                    class="bi bi-heart-pulse-fill text-danger"
+                    style="font-size:45px;">
+                </i>
+
+                <h2 class="mt-3">
+                    {{ total_diseases }}
+                </h2>
+
+                <h5>
+                    Disease Types
+                </h5>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <br>
+
+
+    <!-- =====================================================
+         PREDICTION FORM
+         ===================================================== -->
+
+    <form
+        action="/predict"
+        method="POST"
+        enctype="multipart/form-data">
+
+
+        <div class="card shadow-lg p-4 mb-4">
+
+
+            <div class="row g-4">
+
+
+                <!-- =================================================
+                     LEFT SIDE
+                     ================================================= -->
+
+                <div class="col-md-5">
+
+
+                    <div class="card shadow-lg p-4">
+
+
+                        <h3 class="text-primary mb-3">
+                            🧠 Upload MRI Scan
+                        </h3>
+
+
+                        <hr>
+
+
+                        <h4 class="text-primary mb-4">
+                            👤 Patient Details
+                        </h4>
+
+
+                        <div class="row">
+
+
+                            <!-- PATIENT NAME -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Patient Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="patient_name"
+                                    class="form-control"
+                                    placeholder="Enter patient name"
+                                    value="{{ patient_name or '' }}"
+                                    required>
+
+                            </div>
+
+
+                            <!-- AGE -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Age
+                                </label>
+
+                                <input
+                                    type="number"
+                                    name="patient_age"
+                                    class="form-control"
+                                    placeholder="Age"
+                                    value="{{ patient_age or '' }}"
+                                    min="1"
+                                    max="120"
+                                    required>
+
+                            </div>
+
+
+                            <!-- GENDER -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Gender
+                                </label>
+
+                                <select
+                                    name="patient_gender"
+                                    class="form-select"
+                                    required>
+
+                                    <option value="">
+                                        Select
+                                    </option>
+
+                                    <option
+                                        value="Male"
+                                        {% if patient_gender == "Male" %}selected{% endif %}>
+                                        Male
+                                    </option>
+
+                                    <option
+                                        value="Female"
+                                        {% if patient_gender == "Female" %}selected{% endif %}>
+                                        Female
+                                    </option>
+
+                                    <option
+                                        value="Other"
+                                        {% if patient_gender == "Other" %}selected{% endif %}>
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- PATIENT ID -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Patient ID
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="patient_id"
+                                    class="form-control"
+                                    placeholder="Patient ID"
+                                    value="{{ patient_id or '' }}"
+                                    required>
+
+                            </div>
+
+
+                            <!-- CONTACT -->
+
+                            <div class="col-md-12 mb-3">
+
+                                <label class="form-label">
+                                    Contact Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    name="patient_contact"
+                                    class="form-control"
+                                    placeholder="Contact Number"
+                                    value="{{ patient_contact or '' }}">
+
+                            </div>
+
+
+                        </div>
+
+
+                        <hr>
+
+
+                        <!-- MRI UPLOAD -->
+
+                        <label class="form-label">
+                            Select MRI Image
+                        </label>
+
+
+                        <input
+                            type="file"
+                            name="image"
+                            class="form-control"
+                            accept=".jpg,.jpeg,.png"
+                            required>
+
+
+                        <!-- ANALYZE -->
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-lg w-100 mt-3">
+
+                            <i class="bi bi-cpu-fill"></i>
+
+                            Analyze MRI Scan
+
+                        </button>
+
+
+                        <hr>
+
+
+                        <!-- SUPPORTED FORMATS -->
+
+                        <div class="row text-center">
+
+
+                            <div class="col">
+
+                                <h6 class="text-primary">
+                                    Supported Formats
+                                </h6>
+
+                                <p>
+                                    ✅ JPG
+                                    &nbsp;
+                                    ✅ PNG
+                                    &nbsp;
+                                    ✅ JPEG
+                                </p>
+
+                            </div>
+
+
+                            <div class="col">
+
+                                <h6 class="text-primary">
+                                    Maximum Size
+                                </h6>
+
+                                <p>
+                                    📁 5 MB
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     RIGHT SIDE : RESULT
+                     ================================================= -->
+
+                {% if disease %}
+
+                <div class="col-md-7">
+
+
+                    <div class="card shadow-lg p-4">
+
+
+                        <h3 class="text-success mb-4">
+                            📊 Prediction Result
+                        </h3>
+
+
+                        <!-- PATIENT INFO -->
+
+                        <div class="alert alert-light border">
+
+
+                            <h5 class="text-primary mb-3">
+                                👤 Patient Information
+                            </h5>
+
+
+                            <div class="row">
+
+
+                                <div class="col-md-6 mb-2">
+
+                                    <strong>
+                                        Patient Name:
+                                    </strong>
+
+                                    {{ patient_name }}
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-2">
+
+                                    <strong>
+                                        Patient ID:
+                                    </strong>
+
+                                    {{ patient_id }}
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-2">
+
+                                    <strong>
+                                        Age:
+                                    </strong>
+
+                                    {{ patient_age }}
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-2">
+
+                                    <strong>
+                                        Gender:
+                                    </strong>
+
+                                    {{ patient_gender }}
+
+                                </div>
+
+
+                                <div class="col-md-12 mb-2">
+
+                                    <strong>
+                                        Contact:
+                                    </strong>
+
+                                    {{ patient_contact }}
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        <hr>
+
+
+                        <div class="row g-4">
+
+
+                            <!-- MRI IMAGE -->
+
+                            <div class="col-md-6 text-center">
+
+
+                                <h5 class="text-primary mb-3">
+                                    🧠 MRI Scan
+                                </h5>
+
+
+                                <img
+                                    src="{{ url_for('static', filename='uploads/' + filename) }}"
+                                    class="img-fluid rounded shadow"
+                                    style="max-height:420px;"
+                                    alt="MRI Scan">
+
+
+                            </div>
+
+
+                            <!-- RESULT -->
+
+                            <div class="col-md-6">
+
+
+                                <h4>
+
+                                    Disease :
+
+                                    <span class="text-danger">
+                                        {{ disease }}
+                                    </span>
+
+                                </h4>
+
+
+                                <h5 class="mt-3">
+
+                                    Confidence :
+
+                                    <span class="text-primary">
+                                        {{ confidence }}
+                                    </span>
+
+                                </h5>
+
+
+                                <div class="alert alert-info mt-3">
+
+                                    🤖 AI Confidence Score :
+
+                                    <b>
+                                        {{ confidence }}
+                                    </b>
+
+                                </div>
+
+
+                                <hr>
+
+
+                                <h5>
+                                    Description
+                                </h5>
+
+                                <p>
+                                    {{ description }}
+                                </p>
+
+
+                                <h5>
+                                    Precautions
+                                </h5>
+
+                                <p>
+                                    {{ precautions }}
+                                </p>
+
+
+                                <h5>
+                                    Recommended Doctor
+                                </h5>
+
+                                <p>
+                                    {{ doctor }}
+                                </p>
+
+
+                                <a
+                                    href="{{ url_for('download_report') }}"
+                                    class="btn btn-danger mt-2">
+
+                                    <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                                    Download PDF Report
+
+                                </a>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+
+    <!-- =====================================================
+         FEATURES
+         ===================================================== -->
+
+    <div class="row mt-4 g-4">
+
+
+        <div class="col-md-4 text-center">
+
+
+            <i
+                class="bi bi-shield-check text-primary"
+                style="font-size:50px;">
+            </i>
+
+
+            <h5 class="mt-3">
+                Secure AI Detection
             </h5>
 
-            <div class="row">
 
-                <div class="col-md-6 mb-2">
+            <p>
+                Your MRI scans are processed securely with AI.
+            </p>
 
-                    <strong>Patient Name:</strong>
-
-                    {{ patient_name }}
-
-                </div>
-
-
-                <div class="col-md-6 mb-2">
-
-                    <strong>Patient ID:</strong>
-
-                    {{ patient_id }}
-
-                </div>
-
-
-                <div class="col-md-6 mb-2">
-
-                    <strong>Age:</strong>
-
-                    {{ patient_age }}
-
-                </div>
-
-
-                <div class="col-md-6 mb-2">
-
-                    <strong>Gender:</strong>
-
-                    {{ patient_gender }}
-
-                </div>
-
-
-                <div class="col-md-12 mb-2">
-
-                    <strong>Contact:</strong>
-
-                    {{ patient_contact }}
-
-                </div>
-
-            </div>
 
         </div>
 
 
-        <hr>
+        <div class="col-md-4 text-center">
 
 
-        <div class="row g-4">
+            <i
+                class="bi bi-lightning-charge-fill text-warning"
+                style="font-size:50px;">
+            </i>
 
 
-            <!-- MRI IMAGE -->
-
-            <div class="col-md-6 text-center">
-
-                <h5 class="text-primary mb-3">
-                    🧠 MRI Scan
-                </h5>
-
-                <img
-                    src="{{ url_for('static', filename='uploads/' + filename) }}"
-                    class="img-fluid rounded shadow"
-                    style="max-height:420px;">
-
-            </div>
+            <h5 class="mt-3">
+                Fast Prediction
+            </h5>
 
 
-            <!-- RESULT DETAILS -->
+            <p>
+                Instant brain tumor detection within seconds.
+            </p>
 
-            <div class="col-md-6">
-
-                <h4>
-
-                    Disease :
-
-                    <span class="text-danger">
-                        {{ disease }}
-                    </span>
-
-                </h4>
-
-
-                <h5 class="mt-3">
-
-                    Confidence :
-
-                    <span class="text-primary">
-                        {{ confidence }}
-                    </span>
-
-                </h5>
-
-
-                <div class="alert alert-info mt-3">
-
-                    🤖 AI Confidence Score :
-
-                    <b>
-                        {{ confidence }}
-                    </b>
-
-                </div>
-
-
-                <hr>
-
-
-                <h5>
-                    Description
-                </h5>
-
-                <p>
-                    {{ description }}
-                </p>
-
-
-                <h5>
-                    Precautions
-                </h5>
-
-                <p>
-                    {{ precautions }}
-                </p>
-
-
-                <h5>
-                    Recommended Doctor
-                </h5>
-
-                <p>
-                    {{ doctor }}
-                </p>
-
-
-                <!-- Download PDF -->
-
-                <a
-                    href="{{ url_for('download_report') }}"
-                    class="btn btn-danger mt-2">
-
-                    <i class="bi bi-file-earmark-pdf-fill"></i>
-
-                    Download PDF Report
-
-                </a>
-
-            </div>
 
         </div>
 
+
+        <div class="col-md-4 text-center">
+
+
+            <i
+                class="bi bi-hospital-fill text-danger"
+                style="font-size:50px;">
+            </i>
+
+
+            <h5 class="mt-3">
+                Doctor Recommendation
+            </h5>
+
+
+            <p>
+                Get the recommended specialist based on prediction.
+            </p>
+
+
+        </div>
+
+
     </div>
 
-</div>
 
-{% endif %}
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
 
-
-<!-- ================================================= -->
-<!-- FEATURES SECTION -->
-<!-- ================================================= -->
-
-<div class="row mt-4">
+    <footer class="text-center mt-5 mb-3">
 
 
-    <!-- Secure AI Detection -->
-
-    <div class="col-md-4 text-center">
-
-        <i
-            class="bi bi-shield-check text-primary"
-            style="font-size:50px;">
-        </i>
-
-        <h5 class="mt-3">
-            Secure AI Detection
-        </h5>
-
-        <p>
-            Your MRI scans are processed securely with AI.
+        <p class="mb-1">
+            © 2026 AI Medical Assistant
         </p>
 
-    </div>
 
-
-    <!-- Fast Prediction -->
-
-    <div class="col-md-4 text-center">
-
-        <i
-            class="bi bi-lightning-charge-fill text-warning"
-            style="font-size:50px;">
-        </i>
-
-        <h5 class="mt-3">
-            Fast Prediction
-        </h5>
-
-        <p>
-            Instant brain tumor detection within seconds.
+        <p class="mb-0">
+            Developed using
         </p>
 
-    </div>
-
-
-    <!-- Doctor Recommendation -->
-
-    <div class="col-md-4 text-center">
-
-        <i
-            class="bi bi-hospital-fill text-danger"
-            style="font-size:50px;">
-        </i>
-
-        <h5 class="mt-3">
-            Doctor Recommendation
-        </h5>
 
         <p>
-            Get the recommended specialist based on prediction.
+            Python • Flask • TensorFlow • Bootstrap • SQLite
         </p>
 
-    </div>
+
+    </footer>
+
 
 </div>
 
 
-<!-- ================================================= -->
-<!-- FOOTER -->
-<!-- ================================================= -->
-
-<footer class="text-center mt-5 mb-3">
-
-    <p class="mb-1">
-        © 2026 AI Medical Assistant
-    </p>
-
-    <p class="mb-0">
-        Developed using
-    </p>
-
-    <p>
-        Python • Flask • TensorFlow • Bootstrap • SQLite
-    </p>
-
-</footer>
-    
-
-</div>
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
 
 <script>
 
-const btn=document.getElementById("darkModeBtn");
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
 
-btn.onclick=function(){
+const sidebar = document.getElementById("sidebar");
 
-document.body.classList.toggle("dark-mode");
+const mobileMenuBtn =
+    document.getElementById("mobileMenuBtn");
 
-if(document.body.classList.contains("dark-mode")){
+const sidebarClose =
+    document.getElementById("sidebarClose");
 
-btn.innerHTML="☀ Light Mode";
+const sidebarOverlay =
+    document.getElementById("sidebarOverlay");
 
-}else{
 
-btn.innerHTML="🌙 Dark Mode";
+/* OPEN SIDEBAR */
+
+mobileMenuBtn.addEventListener("click", function () {
+
+    sidebar.classList.add("active");
+
+    sidebarOverlay.classList.add("active");
+
+});
+
+
+/* CLOSE SIDEBAR */
+
+sidebarClose.addEventListener("click", function () {
+
+    sidebar.classList.remove("active");
+
+    sidebarOverlay.classList.remove("active");
+
+});
+
+
+/* CLOSE WHEN OVERLAY IS CLICKED */
+
+sidebarOverlay.addEventListener("click", function () {
+
+    sidebar.classList.remove("active");
+
+    sidebarOverlay.classList.remove("active");
+
+});
+
+
+/* CLOSE SIDEBAR AFTER CLICKING OPTION */
+
+const sidebarLinks =
+    document.querySelectorAll(".sidebar a");
+
+sidebarLinks.forEach(function(link) {
+
+    link.addEventListener("click", function() {
+
+        sidebar.classList.remove("active");
+
+        sidebarOverlay.classList.remove("active");
+
+    });
+
+});
+
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+const btn =
+    document.getElementById("darkModeBtn");
+
+
+btn.onclick = function() {
+
+    document.body.classList.toggle("dark-mode");
+
+
+    if (
+        document.body.classList.contains("dark-mode")
+    ) {
+
+        btn.innerHTML = "☀ Light Mode";
+
+    } else {
+
+        btn.innerHTML = "🌙 Dark Mode";
+
+    }
+
+};
+
+
+/* =========================================================
+   DATE & TIME
+   ========================================================= */
+
+function updateDateTime() {
+
+    const now = new Date();
+
+
+    const dateElement =
+        document.getElementById("currentDate");
+
+    const timeElement =
+        document.getElementById("currentTime");
+
+
+    if (dateElement) {
+
+        dateElement.innerHTML =
+            now.toLocaleDateString();
+
+    }
+
+
+    if (timeElement) {
+
+        timeElement.innerHTML =
+            now.toLocaleTimeString();
+
+    }
 
 }
 
-}
 
-function updateDateTime(){
-
-const now=new Date();
-
-document.getElementById("currentDate").innerHTML=
-now.toLocaleDateString();
-
-document.getElementById("currentTime").innerHTML=
-now.toLocaleTimeString();
-
-}
-
-setInterval(updateDateTime,1000);
+setInterval(updateDateTime, 1000);
 
 updateDateTime();
 
 </script>
+
 
 </body>
 
